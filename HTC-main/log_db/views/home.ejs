@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTC - Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+HarunoUmi&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            overflow-x: hidden !important;
+            color: rgb(0, 0, 0);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3px 20px;
+            background-color: #003366;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(131, 214, 237, 0.5);
+
+        }
+
+
+        .menu-icon {
+            font-size: 28px;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+
+            gap: 40px;
+            margin-left: 800px;
+            margin-top: 8px;
+
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .nav-links li a:hover {
+            background-color: rgba(110, 181, 255, 0.2);
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        /* Icons */
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            color: white;
+            gap: 20px;
+        }
+
+        .navbar-right i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .custom-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .custom-link:hover {
+            color: #ddd;
+            /* لون مختلف عند التحويم */
+        }
+
+
+
+  /* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 250px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: none;
+  z-index: 9999;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-section {
+  background: linear-gradient(135deg, #4361ee, #003366);
+  color: white;
+  padding: 1.2rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-img2 {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.8rem;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.profile-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
+}
+
+.profile-info {
+  font-size: 0.82rem;
+  opacity: 0.85;
+  letter-spacing: 0.3px;
+  margin-top: 0.2rem;
+}
+
+.dropdown-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-links li {
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-links li:last-child {
+  border-bottom: none;
+}
+
+.dropdown-links li a {
+  display: block;
+  padding: 0.85rem 1.5rem;
+  text-decoration: none;
+  color: #2b2d42;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.dropdown-links li a:hover {
+  background: #f8f8f8;
+  padding-left: 1.75rem;
+  color: #003366;
+}
+
+/* Keep the notification styles unchanged */
+.notification-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.notification-icon {
+  color: #ffffff;
+  font-size: 1.5rem;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff4d4f;
+  color: rgb(0, 25, 248);
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: none;
+}
+
+.notification-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  width: 350px;
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border: 1px solid #e8e8e8;
+  color: #003366;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #fafafa;
+  font-weight: bold;
+}
+
+.mark-read-btn {
+  background: none;
+  border: none;
+  color: #1890ff;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.mark-read-btn:hover {
+  text-decoration: underline;
+}
+
+.notification-content {
+  padding: 0;
+}
+
+.notification-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.notification-item:hover {
+  background-color: #f5f5f5;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+/* Animation for new notifications */
+@keyframes highlight {
+  0% { background-color: rgba(24, 144, 255, 0.1); }
+  100% { background-color: white; }
+}
+
+.notification-item.new {
+  animation: highlight 2s;
+}
+
+/* Dropdown Links */
+.dropdown-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-links li {
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-links li:last-child {
+  border-bottom: none;
+}
+
+.dropdown-links li a {
+  display: flex;
+  align-items: center; /* Align icon and text vertically */
+  padding: 0.85rem 1.5rem;
+  text-decoration: none;
+  color: #2b2d42;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.dropdown-links li a i {
+  font-size: 1rem; /* Size of the icon */
+  color: #7a7c85; /* Match --primary-color */
+  margin-right: 0.5rem; /* Space between icon and text */
+  transition: color 0.3s ease;
+}
+
+.dropdown-links li a:hover {
+  background: #f8f8f8;
+  padding-left: 1.75rem; /* Shift text and icon on hover */
+  color: #003366;
+}
+
+.dropdown-links li a:hover i {
+  color: #003366; /* Match --primary-dark on hover */
+}
+        .img-fluid {
+            width: 40%;
+            /* تقليص حجم الصورة لتكون 60% من الحاوية أو يمكنك تعديل النسبة حسب الحاجة */
+            height: auto;
+            /* الحفاظ على نسبة العرض إلى الارتفاع */
+            border-radius: 6 0px;
+            /* حواف دائرية ناعمة */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* إضافة ظل ناعم للصورة */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* إضافة تأثير انتقال عند التحويم */
+        }
+
+        /* تأثير التكبير عند التحويم */
+        .img-fluid:hover {
+            transform: scale(1.05);
+            /* تكبير الصورة بشكل طفيف عند التحويم */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            /* زيادة الظل عند التحويم */
+        }
+
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Main Section Styling */
+        .main-section {
+            background-color: #f1f5f8;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Text Content */
+        .main-section .display-4 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .main-section .lead {
+            font-size: 1.25rem;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .main-section .btn-primary {
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 30px;
+            background-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-section .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Image Styling */
+        .main-section .img-fluid {
+            max-width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .main-section .img-fluid:hover {
+            transform: scale(1.05);
+        }
+
+        /* Media Queries for Extra Responsiveness */
+        @media (max-width: 767px) {
+            .main-section .display-4 {
+                font-size: 2.5rem;
+            }
+
+            .main-section .lead {
+                font-size: 1.1rem;
+            }
+
+            .main-section .btn-primary {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+
+        /* Features Section Icons */
+
+        /* Feature Card Styling */
+        .feature-card {
+            background: linear-gradient(145deg, #003366, #00509e);
+            /* تدرج لوني للبطاقات */
+            color: #ffffff;
+            /* النص الأبيض */
+            border: none;
+            border-radius: 15px;
+            /* زوايا دائرية ناعمة */
+            overflow: hidden;
+            /* لمنع تجاوز المحتوى */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            /* ظل أساسي */
+        }
+
+        /* Hover Effects for Feature Cards */
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            /* تكبير وتحريك البطاقة للأعلى */
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+            /* ظل أكثر عمقًا */
+            background: linear-gradient(145deg, #00509e, #003366);
+            /* تبديل التدرج اللوني عند التحويم */
+        }
+
+        /* Feature Icons Styling */
+        .feature-icon {
+            color: #6EB5FF;
+            /* اللون الأزرق الفاتح للأيقونات */
+            text-shadow: 0 2px 10px rgba(110, 181, 255, 0.5);
+            /* تأثير توهج للأيقونات */
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            color: #ffffff;
+            /* تغيير لون الأيقونة عند التحويم */
+            text-shadow: 0 4px 15px rgba(255, 255, 255, 0.8);
+            /* زيادة التوهج عند التحويم */
+            transform: scale(1.2);
+            /* تكبير الأيقونة */
+        }
+
+        /* Card Titles */
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            /* تحويل النصوص إلى أحرف كبيرة */
+            letter-spacing: 1px;
+            /* زيادة تباعد الأحرف */
+            transition: color 0.3s ease;
+        }
+
+        .feature-card:hover .card-title {
+            color: #6EB5FF;
+            /* تغيير لون العنوان عند التحويم */
+        }
+
+        /* Card Text */
+        .card-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.85;
+            /* شفافية خفيفة للنص */
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover .card-text {
+            opacity: 1;
+            /* إظهار النص بالكامل عند التحويم */
+        }
+
+        /* Animation for Entry */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease both;
+            /* تطبيق الأنيميشن */
+        }
+
+        .internships {
+            background-color: #004080;
+        }
+
+        .workshops {
+            background-color: #0073e6;
+        }
+
+        .cv-builder {
+            background-color: #00aaff;
+        }
+
+        /* Responsive Adjustments */
+        /* Main Section Styling */
+        /* Main Section Styling */
+        /* Main Section Styling */
+        /* Main Section Styling */
+        .main-section {
+            background-image: url("https://i.pinimg.com/736x/27/da/8d/27da8d95d654e10945ef56b43f1ac875.jpg");
+            background-size: cover;
+            /* Ensures the background image covers the entire section */
+            background-position: center;
+            /* Centers the background image */
+            position: relative;
+            /* Makes it a reference for absolutely positioned children */
+            overflow: hidden;
+            padding: 90px 0;
+            text-align: left;
+            /* Ensures all text is aligned to the left by default */
+            padding-left: -500px;
+            /* Adjust left padding to shift content further left */
+        }
+
+        .overlay-image {
+            position: absolute;
+            /* Positions the image relative to .main-section */
+            top: 80px;
+            /* Adjusts vertical position */
+            right: 100px;
+            /* Adjusts horizontal position */
+            z-index: 10;
+            /* Ensures it appears above the background image */
+        }
+
+        .overlay-image img {
+            width: 350px;
+            /* Adjust the width of the overlay image */
+            height: auto;
+            /* Maintain the image aspect ratio */
+            border: 2px solid white;
+            /* Optional: Add a border around the image */
+            border-radius: 80%;
+            /* Optional: Add rounded corners for a smoother look */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Optional: Add a shadow for a 3D effect */
+        }
+
+
+        /* Heading Style */
+        .main-section .heading {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #003366;
+            margin-bottom: 20px;
+            display: block;
+            /* Makes it block-level, ensuring it takes full width */
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            z-index: 2;
+            margin-left: -400px;
+        }
+
+        /* Text Content */
+        .main-section .lead {
+            font-size: 1.3rem;
+            color: #003366;
+            margin-bottom: 30px;
+            font-weight: 400;
+            text-align: left;
+            /* Ensures left alignment */
+            z-index: 2;
+            margin-left: -400px;
+        }
+
+        /* Media Queries for Extra Responsiveness */
+        @media (max-width: 767px) {
+            .main-section .heading {
+                font-size: 2.5rem;
+            }
+
+            .main-section .lead {
+                font-size: 1.1rem;
+            }
+
+            .main-section .btn-gradient {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+        }
+
+
+        /* Reviews Section */
+        .reviews-section {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #f4f4f4;
+        }
+
+        .reviews-container {
+            display: flex;
+            animation: scrollReviews 30s linear infinite;
+        }
+
+        @keyframes scrollReviews {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .review {
+            min-width: 300px;
+            margin: 0 15px;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .review i {
+            font-size: 40px;
+            color: #004080;
+        }
+
+        .review-name {
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #004080;
+        }
+
+        .review-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+
+        }
+        
+.add-review-form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+}
+
+.add-review-form h4 {
+  color: #004080;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* تنسيق عناوين الحقول */
+.form-label,
+.add-review-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #004080;
+  font-size: 1rem;
+}
+
+/* تنسيق حقول الإدخال */
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #004080;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 64, 128, 0.2);
+}
+
+/* زر الإرسال */
+.add-review-form button[type="submit"] {
+  background-color: #004080;
+  color: #ffffff;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.add-review-form button[type="submit"]:hover {
+  background-color: #0066cc;
+}
+
+        /* Footer Container Styles */
+        footer {
+            background-color: #004080;
+            /* Dark blue background */
+            color: #ffffff;
+            /* White text color */
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            /* Spacing between sections */
+        }
+
+        /* Footer Section Styles */
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            /* Ensures sections stack on smaller screens */
+            padding: 10px;
+        }
+
+        .footer-section h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            /* Adds space inside the box */
+            font-weight: 700;
+            text-transform: capitalize;
+            /* Changes text style to capitalize */
+            letter-spacing: 0.5px;
+            /* Reduces spacing between letters */
+            color: #004080;
+            /* Dark blue text color */
+            background: linear-gradient(to right, #ffffff, #b3d1ff);
+            /* Gradient background */
+            border-left: 5px solid #004080;
+            /* Adds a thick left border */
+            border-radius: 4px;
+            /* Subtle rounded corners */
+            text-align: center;
+            /* Aligns the text to the left */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            /* Soft shadow for depth */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* Smooth animation effects */
+        }
+
+
+
+        .footer-section p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .footer-section a {
+            color: #40E0D0;
+            /* Gold color for email links */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+            /* Amber on hover */
+        }
+
+        .footer-section ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #40E0D0;
+            /* Orange links */
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .footer-section ul li a:hover {
+            color: #e74c3c;
+            /* Red on hover */
+        }
+
+        /* Social Media Links */
+        .social-media {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .social-media ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-media ul li a {
+            color: #ffffff;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .social-media ul li a:hover {
+            color: #f39c12;
+        }
+
+        /* Footer Bottom Section */
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ffffff;
+            font-size: 16px;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .social-media ul {
+                justify-content: center;
+            }
+        }
+
+        /* Logo Styling */
+        .navbar .logo-container {
+            display: inline-block;
+            padding-right: 15px;
+            /* Add spacing if necessary */
+        }
+
+        .navbar .logo {
+            height: 50px;
+            /* Adjust as necessary */
+            width: auto;
+        }
+
+        .notification-icon-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .notification-icon {
+            color: #ffffff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff4d4f;
+            color: rgb(0, 25, 248);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            width: 350px;
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border: 1px solid #e8e8e8;
+            color: #003366
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            background-color: #fafafa;
+            font-weight: bold;
+        }
+
+        .mark-read-btn {
+            background: none;
+            border: none;
+            color: #1890ff;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .mark-read-btn:hover {
+            text-decoration: underline;
+        }
+
+        .notification-content {
+            padding: 0;
+        }
+
+        .notification-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s;
+        }
+
+        .notification-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Animation for new notifications */
+        @keyframes highlight {
+            0% {
+                background-color: rgba(24, 144, 255, 0.1);
+            }
+
+            100% {
+                background-color: white;
+            }
+        }
+
+        .notification-item.new {
+            animation: highlight 2s;
+        }
+    </style>
+</head>
+
+<body>
+  <!-- Header -->
+<header>
+    <nav class="navbar">
+      <!-- Menu icon for mobile -->
+      <div class="menu-icon" onclick="toggleMenu()">
+        <span>&#9776;</span>
+      </div>
+  
+      <!-- Logo -->
+      <div class="logo-container">
+        <img src="https://i.pinimg.com/736x/33/37/ee/3337eeff3be1747f984d9d8e59eeb1c1.jpg" alt="Logo" class="logo">
+      </div>
+  
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/companies">Companies</a></li>
+        <li><a href="/certi-0">Certificates</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <% if (!user) { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Sign Up</a></li>
+        <% } %>
+      </ul>
+  
+      <!-- Right Section: Notifications + Profile -->
+      <% if (user) { %>
+      <div class="navbar-right">
+  
+        <!-- Profile Icon -->
+        <a href="/profile" title="Profile" class="custom-link">
+          <i class="fas fa-user-circle"></i>
+        </a>
+      </div>
+  
+      <!-- Dropdown Menu -->
+      <div id="dropdown-menu" class="dropdown-menu">
+                <div class="profile-section">
+
+                    <span class="profile-name">
+                        <%= user.name %>
+                    </span>
+                    <span class="profile-info">
+
+                        <br>
+                        <hr style="background-color:white">
+                        <%= user.std_id %>
+                    </span>
+                </div>
+             <ul class="dropdown-links">
+    <li><a href="companies"><i class="fas fa-building me-2"></i>Companies</a></li>
+    <li><a href="cv"><i class="fas fa-file-alt me-2"></i>CV</a></li>
+    <li><a href="courses"><i class="fas fa-book-open me-2"></i>Courses</a></li>
+    <li><a href="/task_std"><i class="fas fa-tasks me-2"></i>Student Task</a></li>
+    <li><a href="/student_applicant"><i class="fas fa-users me-2"></i>Applicants</a></li>
+    <li><a href="certi-0"><i class="fas fa-certificate me-2"></i>Certificate</a></li>
+    <li><a href="contact"><i class="fas fa-envelope me-2"></i>Contact Us</a></li>
+    <li><a href="logout" style="color: #fc1c1c;"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+</ul>
+            </div>
+      <% } %>
+    </nav>
+  </header>
+  
+
+
+    <!-- إضافة رسالة النجاح هنا -->
+    <% if (success_msg) { %>
+        <div class="notification success">
+            <%= success_msg %>
+        </div>
+        <% } %>
+            <!-- Main Section -->
+            <section class="main-section">
+                <div class="overlay-image">
+                    <img src="https://i.pinimg.com/736x/90/35/d9/9035d996f4d502dca6f09d497f966c48.jpg"
+                        alt="Overlay Image">
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <!-- Left Column: Text Content -->
+                        <div class="col-md-6 text-center text-md-left">
+                            <h2 class="heading">Experience the Art of Innovation</h2><br>
+                            <p class="lead">Dive into a new world of creative possibilities.<br> Our unique approach
+                                guarantees excellence.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <div class="container features-section mt-5">
+                <h3 class="text-center mb-4">Our Features</h3>
+                <div class="row text-center">
+                    <!-- Feature 1 -->
+                    <div class="col-lg-4">
+                        <div class="card feature-card shadow">
+                            <div class="card-body internships">
+                                <i class="fas fa-users fa-3x feature-icon mb-3"></i>
+                                <h5 class="card-title">Internship Opportunities</h5>
+                                <p class="card-text">Access exclusive internship opportunities and kickstart your
+                                    career.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="col-lg-4">
+                        <div class="card feature-card shadow">
+                            <div class="card-body workshops ">
+                                <i class="fas fa-briefcase fa-3x feature-icon mb-3"></i>
+                                <h5 class="card-title">Job Updates</h5>
+                                <p class="card-text">Stay updated on the latest job openings and industry trends.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="col-lg-4">
+                        <a href="/cv" class="text-decoration-none">
+                            <div class="card feature-card shadow">
+                                <div class="card-body cv-builder">
+                                    <i class="fas fa-file-alt fa-3x feature-icon mb-3"></i>
+                                    <h5 class="card-title">Professional CV</h5>
+                                    <p class="card-text">Build a professional CV to stand out in the job market.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+
+            <!-- Reviews Section -->
+            <div class="reviews-section">
+                <br>
+                <h3>What Our Users Say</h3><br><br>
+                <div class="reviews-container" id="reviews-container">
+                    <!-- Existing Reviews -->
+                    <div class="review">
+                        <img src="https://i.pinimg.com/736x/df/41/30/df4130d37ecefb93801c27fd2f3c7193.jpg"
+                            alt="Sara Sartawii" class="review-image">
+                        <p>"HTC helped me find the perfect internship!"</p>
+                        <div class="review-name">- Sara Sartawii</div>
+                    </div>
+                    <div class="review">
+                        <img src="https://i.pinimg.com/736x/2b/6b/30/2b6b30f17001ee58bb2ee33e340a1889.jpg"
+                            alt="Layan Khaireddin" class="review-image">
+                        <p>"Highly recommend this platform for students!"</p>
+                        <div class="review-name">- farah Saleh</div>
+                    </div>
+                    <div class="review">
+                        <img src="https://i.pinimg.com/736x/18/e8/ff/18e8ff54981bbc5a59194c161b786f6a.jpg"
+                            alt="Leen Atari" class="review-image">
+                        <p>"The CV builder is fantastic."</p>
+                        <div class="review-name">- Leen Atari</div>
+                    </div>
+                    <div class="review">
+                        <img src="https://i.pinimg.com/736x/98/1d/bc/981dbc41faa818535b863d6589b1608e.jpg"
+                            alt="Tala Alamm" class="review-image">
+                        <p>"Amazing workshops and opportunities!"</p>
+                        <div class="review-name">- Tala Alamm</div>
+                    </div>
+                    <div class="review">
+                        <img src="https://i.pinimg.com/736x/66/5e/c8/665ec8cd4921df12b0c60602792b2693.jpg"
+                            alt="Dana Sami" class="review-image">
+                        <p>"Their support is exceptional."</p>
+                        <div class="review-name">- Dana Sami</div>
+                    </div>
+                    <% reviews.forEach(review=> { %>
+                        <div class="review">
+                            <img src="<%= review.url ? review.url : 'https://icons.veryicon.com/png/o/miscellaneous/commonly-used-icon-1/personal-25.png' %>"
+                                alt="<%= review.name %>" class="review-image">
+                            <p>"<%= review.review %>"</p>
+                            <div class="review-name">- <%= review.name %>
+                            </div>
+                        </div>
+                        <% }); %>
+
+                </div>
+
+                <!-- Add Review Form -->
+                <div class="add-review-form mt-5">
+                    <h4>Add Your Review</h4>
+                    <form id="review-form" method="POST" action="/home">
+                        <div class="form-group">
+                            <label for="review-name">Your Name:</label>
+                            <input type="text" class="form-control" id="review-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-image">Image URL (Optional):</label>
+                            <input type="url" class="form-control" id="review-image" name="url">
+                        </div>
+                        <div class="form-group">
+                            <label for="review-text">Your Review:</label>
+                            <textarea name="review" class="form-control" id="review-text" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+            <br><br>
+
+            <!-- Footer -->
+            <footer>
+                <div class="footer-container">
+                    <!-- Company Info Section -->
+                    <div class="footer-section">
+                        <h3><i class="fas fa-info-circle"></i> About Us</h3>
+                        <p>
+                            The Hashemite Training Center connects students with training opportunities, offering CV
+                            submissions, templates, courses, and progress tracking to help build essential career
+                            skills.</p>
+                    </div>
+
+                    <!-- Quick Links Section -->
+                    <div class="footer-section">
+                        <h3><i class="fas fa-link"></i> Quick Links</h3>
+                        <ul>
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/service">Our Services</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Information Section -->
+                    <div class="footer-section">
+                        <h3><i class="fas fa-phone-alt"></i> Contact</h3>
+                        <p>Email: <a href="mailto:support@company.com">HTCwebsite77@company.com</a></p>
+                        <p>Phone: <a href="tel:+123456789">+962 7909 88 283 </a></p>
+                    </div>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="social-media">
+                    <ul>
+                        <li><a href="https://www.facebook.com/yourcompany" target="_blank"><i
+                                    class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://twitter.com/yourcompany" target="_blank"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li><a href="https://www.linkedin.com/company/yourcompany" target="_blank"><i
+                                    class="fab fa-linkedin-in"></i></a></li>
+                        <li><a href="https://www.instagram.com/yourcompany" target="_blank"><i
+                                    class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+
+                <!-- Footer Bottom Section -->
+                <div class="footer-bottom">
+                    <p> &copy;2024 HTC. All rights reserved.</p>
+                </div>
+            </footer>
+
+            <!-- Bootstrap and JavaScript -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                function toggleMenu() {
+                    var dropdownMenu = document.getElementById("dropdown-menu");
+                    if (dropdownMenu.style.display === "block") {
+                        dropdownMenu.style.display = "none";
+                    } else {
+                        dropdownMenu.style.display = "block";
+                    }
+                }
+
+                document.addEventListener('click', function (event) {
+                    var dropdownMenu = document.getElementById("dropdown-menu");
+                    var menuIcon = document.querySelector('.menu-icon');
+                    if (!menuIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.style.display = 'none';
+                    }
+                });
+
+
+                // This would typically come from server-side rendering or API
+
+                // Global variable to track new notifications
+                let hasNewNotifications = false;
+
+                // Fetch notifications when page loads
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Show welcome notification immediately and prominently
+                    showWelcomeNotification();
+
+                    // Then load other notifications
+                    fetchNotifications();
+
+                    // Simulate receiving a new message after 3 seconds (demo only)
+                    setTimeout(simulateNewMessage, 3000);
+                });
+
+                // Show welcome notification as the first thing
+                function showWelcomeNotification() {
+                    const welcomeMessage = "WELCOME TO HASHIMATE TRAINING CENTER!";
+                    const dropdownContent = document.querySelector("#notification-dropdown .notification-content");
+                    const badge = document.getElementById("notification-badge");
+
+                    // Clear any existing content
+                    dropdownContent.innerHTML = '';
+
+                    // Create special welcome notification element
+                    const welcomeNotification = document.createElement("div");
+                    welcomeNotification.className = "notification-item welcome-notification";
+                    welcomeNotification.innerHTML = `
+    <div class="welcome-header">
+      <i class="fas fa-graduation-cap welcome-icon"></i>
+      <h3>${welcomeMessage}</h3>
+    </div>
+    <p class="welcome-text">We're excited to have you here! Get started with your training journey.</p>
+  `;
+
+                    // Add to dropdown
+                    dropdownContent.appendChild(welcomeNotification);
+
+                    // Update badge
+                    badge.textContent = "1";
+                    badge.style.display = "inline-block";
+
+                    // Force open the dropdown immediately
+                    const dropdown = document.getElementById("notification-dropdown");
+                    dropdown.style.display = "block";
+
+                    // Add welcome notification style
+                    const style = document.createElement('style');
+                    style.textContent = `
+    .welcome-notification {
+      background-color: #f8f9fa;
+      border-left: 4px solid #1890ff;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    .welcome-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .welcome-icon {
+      font-size: 24px;
+      color: #1890ff;
+      margin-right: 10px;
+    }
+    .welcome-notification h3 {
+      color: #1890ff;
+      margin: 0;
+      font-size: 18px;
+    }
+    .welcome-text {
+      color: #666;
+      margin: 0;
+    }
+  `;
+                    document.head.appendChild(style);
+                }
+
+                // Toggle notifications dropdown
+                function toggleNotifications() {
+                    const dropdown = document.getElementById("notification-dropdown");
+                    if (dropdown.style.display === "block") {
+                        dropdown.style.display = "none";
+                    } else {
+                        dropdown.style.display = "block";
+                        fetchNotifications(); // Load notifications dynamically
+                    }
+                }
+
+                // Fetch notifications from server
+                async function fetchNotifications() {
+                    const dropdownContent = document.querySelector("#notification-dropdown .notification-content");
+                    const badge = document.getElementById("notification-badge");
+
+                    try {
+                        const response = await fetch("/api/notifications");
+                        const notifications = await response.json();
+
+                        if (notifications.length > 0) {
+                            notifications.forEach(notif => {
+                                const notification = document.createElement("div");
+                                notification.className = `notification-item ${notif.isNew ? 'new' : ''}`;
+                                notification.textContent = notif.text;
+                                dropdownContent.appendChild(notification);
+                            });
+
+                            // Update badge count (adding 1 for the welcome message)
+                            badge.textContent = notifications.filter(n => !n.isRead).length + 1;
+                            badge.style.display = "inline-block";
+                        }
+                    } catch (error) {
+                        console.error("Failed to fetch notifications", error);
+                        const errorNotification = document.createElement("div");
+                        errorNotification.className = "notification-item error";
+                        errorNotification.textContent = "Error loading notifications";
+                        dropdownContent.appendChild(errorNotification);
+                    }
+                }
+                // Show new notification immediately
+                function showNewNotification(message) {
+                    const dropdownContent = document.querySelector("#notification-dropdown .notification-content");
+                    const badge = document.getElementById("notification-badge");
+
+                    // Create notification element
+                    const notification = document.createElement("div");
+                    notification.className = "notification-item new";
+                    notification.textContent = message;
+
+                    // Add to top of dropdown content
+                    if (dropdownContent.firstChild && dropdownContent.firstChild.textContent === "No new notifications") {
+                        dropdownContent.innerHTML = '';
+                    }
+                    dropdownContent.insertBefore(notification, dropdownContent.firstChild);
+
+                    // Update badge
+                    const currentCount = parseInt(badge.textContent || "0");
+                    badge.textContent = currentCount + 1;
+                    badge.style.display = "inline-block";
+
+                    // Auto-open dropdown if not already open
+                    const dropdown = document.getElementById("notification-dropdown");
+                    if (dropdown.style.display !== "block") {
+                        dropdown.style.display = "block";
+                    }
+
+                    hasNewNotifications = true;
+                }
+
+                // Mark all notifications as read
+                function markNotificationAsRead() {
+                    const badge = document.getElementById("notification-badge");
+                    const notifications = document.querySelectorAll(".notification-item");
+
+                    // Remove 'new' class from all notifications
+                    notifications.forEach(notif => notif.classList.remove('new'));
+
+                    // Update badge
+                    badge.style.display = "none";
+                    badge.textContent = "0";
+
+                    // Send request to server
+                    fetch('/api/notifications/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                    }).catch(error => {
+                        console.error('Update error:', error);
+                    });
+                }
+
+                // Simulate receiving a new message (replace with real WebSocket/API)
+                function simulateNewMessage() {
+                    const messages = [
+                        "New course available: Advanced JavaScript",
+                        "Your certificate is ready for download",
+                        "Upcoming workshop: React Fundamentals",
+                        "Reminder: Class starts at 10am tomorrow",
+                        "Your progress report has been updated"
+                    ];
+
+                    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                    showNewNotification(randomMessage);
+                } 
+            </script>
+
+</body>
+
+</html>

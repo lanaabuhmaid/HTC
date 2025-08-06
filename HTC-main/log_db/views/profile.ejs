@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-dark: #003366;
+      --secondary-color: #4cc9f0;
+      --accent-color: #f72585;
+      --light-bg: #f8f9fa;
+      --dark-text: #2b2d42;
+      --light-text: #8d99ae;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7ff, #f0f4ff);
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark-text);
+      min-height: 100vh;
+    }
+    
+    .profile-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 15px 40px rgba(67, 97, 238, 0.15);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border: none;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .profile-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(67, 97, 238, 0.2);
+    }
+    
+.profile-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 3rem 1rem 1.5rem;
+  text-align: center;
+  position: relative;
+  /* إزالة clip-path لجعل الخلفية مستقيمة */
+  border-radius: 1.5rem 1.5rem 0 0; /* إضافة زوايا مستديرة للأعلى فقط */
+}
+
+.profile-name {
+  margin-top: 100px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  position: relative; /* إضافة لتأكيد التسلسل الهرمي */
+  z-index: 11; /* أعلى من الصورة */
+}
+
+.profile-id {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  position: relative; /* إضافة لتأكيد التسلسل الهرمي */
+  z-index: 11; /* أعلى من الصورة */
+}
+    
+    .info-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #f0f4ff, #e6edff);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--primary-color);
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .info-icon:hover {
+      transform: translateY(-3px);
+      color: var(--primary-dark);
+    }
+    
+    .info-title {
+      font-weight: 600;
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .info-value {
+      color: var(--dark-text);
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    
+    
+    footer {
+      text-align: center;
+      color: var(--light-text);
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 4px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+    
+    .quote-text {
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+      font-style: italic;
+      position: relative;
+      padding: 0 2rem;
+    }
+    
+    .quote-text::before,
+    .quote-text::after {
+      content: '"';
+      font-size: 2rem;
+      color: var(--secondary-color);
+      position: absolute;
+      opacity: 0.6;
+    }
+    
+    .quote-text::before {
+      left: -10px;
+      top: -10px;
+    }
+    
+    .quote-text::after {
+      right: -10px;
+      bottom: -20px;
+    }
+    .badge-custom {
+      background: var(--accent-color);
+      color: white;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 0.5rem;
+    }
+    
+    /* Enhanced Logo Styles */
+    .logo-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      background: white;
+      padding: 2px;
+    }
+    
+    .logo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+    }
+    
+    .logo-text {
+      margin-left: 10px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Enhanced Navbar Styles */
+    .navbar {
+      
+      display: flex;
+      justify-content: space-between;
+      align-items: right;
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 0.75rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 45px;
+            margin-left: 650px;
+            margin-bottom: 7px;
+            /* تعديل من 700px إلى auto لتوزيع المسافات بشكل أفضل */
+            align-items: center;
+            /* التأكد من محاذاة العناصر رأسياً */
+            margin-right: 40px;
+        }
+
+    .nav-links a {
+      
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      color: var(--secondary-color);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .menu-icon {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+    
+    .menu-icon:hover {
+      transform: scale(1.1);
+    }
+    
+    .navbar-right {
+      
+      display: flex;
+      align-items: center;
+      color: white;
+      gap: 20px;
+    }
+    
+    .navbar-right .custom-link {
+      
+      font-size: 1.3rem;
+      color: white;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar-right .custom-link:hover {
+      color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      width: 250px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 9999;
+      overflow: hidden;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  
+.profile-section {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 1.2rem 1.5rem; 
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.profile-section .logo {
+  width: 70px; 
+  height: 70px;
+  border: 3px solid rgba(255, 255, 255, 0.2); 
+  margin-bottom: 0.8rem; 
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+.profile-name {
+  font-weight: 600;
+  font-size: 1.05rem; 
+  margin-bottom: 0.3rem; 
+  line-height: 1.3;
+}
+
+
+.profile-info {
+  font-size: 0.82rem;
+  opacity: 0.85;
+  letter-spacing: 0.3px;
+  margin-top: 0.2rem; 
+}
+    .dropdown-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .dropdown-links li {
+      border-bottom: 1px solid #eee;
+    }
+    
+    .dropdown-links li:last-child {
+      border-bottom: none;
+    }
+    
+    .dropdown-links li a {
+      display: block;
+      padding: 0.85rem 1.5rem;
+      text-decoration: none;
+      color: var(--dark-text);
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .dropdown-links li a:hover {
+      background: #f8f8f8;
+      padding-left: 1.75rem;
+      color: var(--primary-dark);
+    }
+    
+    /* Profile Avatar */
+    .profile-avatar {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 5px solid white;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      object-fit: cover;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    
+    .profile-avatar:hover {
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    
+    
+    /* Stats Section */
+    .stats-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--light-text);
+      font-weight: 500;
+    }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 992px) {
+      .nav-links {
+        gap: 15px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem 1.5rem;
+      }
+      
+      .nav-links {
+        
+        display: none;
+        flex-direction: column;
+        background-color: var(--primary-dark);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .menu-icon {
+        display: block;
+      }
+      
+      .profile-header {
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        padding: 2.5rem 1rem 1.5rem;
+      }
+      
+      .profile-name {
+        margin-top: 80px;
+        font-size: 1.5rem;
+      }
+      
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .dropdown-menu {
+        right: 10px;
+        width: 90%;
+        max-width: 280px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .navbar-right {
+        gap: 15px;
+      }
+      
+      .stat-item {
+        min-width: 120px;
+        padding: 1rem;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <!-- Menu icon for mobile -->
+    <div class="menu-icon" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Logo with Text -->
+    <div class="logo-container">
+      <img src="https://i.pinimg.com/736x/33/37/ee/3337eeff3be1747f984d9d8e59eeb1c1.jpg" alt="University Logo" class="logo">
+      <span class="logo-text">Hashemaite Training Center</span>
+    </div>
+
+    <!-- Navigation Links -->
+    <ul class="nav-links">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/companies">Companies</a></li>
+      <li><a href="/certi-0">Certificates</a></li>
+      <li><a href="/courses">Courses</a></li>
+      <% if (!user) { %>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Sign Up</a></li>
+      <% } %>
+    </ul>
+
+    <!-- Right Section: Notifications + Profile -->
+    <% if (user) { %>
+    <div class="navbar-right">
+      
+      
+      <!-- Profile Icon with Dropdown Toggle -->
+      <a href="#" title="Profile" class="custom-link" onclick="toggleDropdown()">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div id="dropdown-menu" class="dropdown-menu">
+      <div class="profile-section">
+        <img src="https://i.pinimg.com/736x/33/37/ee/3337eeff3be1747f984d9d8e59eeb1c1.jpg" alt="Profile" class="logo mb-2" style="width: 60px; height: 60px;">
+        <div class="profile-name"><%= user.name %></div>
+        <div class="profile-info">ID: <%= user.std_id %></div>
+      </div>
+      <ul class="dropdown-links">
+        <li><a href="/profile"><i class="fas fa-user-circle me-2"></i>My Profile</a></li>
+        <li><a href="/companies"><i class="fas fa-building me-2"></i>Companies</a></li>
+        <li><a href="/cv"><i class="fas fa-file-alt me-2"></i>My CV</a></li>
+        <li><a href="/courses"><i class="fas fa-book-open me-2"></i>Courses</a></li>
+        <li><a href="/certi-0"><i class="fas fa-certificate me-2"></i>Certificates</a></li>
+        <li><a href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+        <li><a href="/contact"><i class="fas fa-envelope me-2"></i>Contact Us</a></li>
+        <li><a href="/logout" style="color: var(--accent-color);"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+      </ul>
+    </div>
+    <% } %>
+  </nav>
+  
+  <div class="container my-5">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold" style="color: var(--primary-dark);">Student Profile</h2>
+      <p class="quote-text">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today."</p>
+    </div>
+
+    <div class="profile-card p-4">
+      <div class="profile-header">
+        <!-- Profile Avatar -->
+        <img src="https://i.pinimg.com/736x/33/37/ee/3337eeff3be1747f984d9d8e59eeb1c1.jpg" alt="Profile" class="profile-avatar">
+        
+    
+        
+        <h3 class="profile-name">
+          <i class="bi bi-mortarboard-fill me-2"></i>
+          <%= user.name %>
+        </h3>
+        <p class="profile-id">ID: <%= user.std_id %></p>
+      </div>
+      
+
+      <div class="p-4 mt-3">
+        
+
+        <div class="row g-4 mt-4">
+          <div class="col-md-6 d-flex align-items-start">
+            <div class="info-icon me-3"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="info-title">Email</div>
+              <div class="info-value"><%= user.email %></div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex align-items-start">
+            <div class="info-icon me-3"><i class="fas fa-university"></i></div>
+            <div>
+              <div class="info-title">University</div>
+              <div class="info-value"><%= user.university %></div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex align-items-start">
+            <div class="info-icon me-3"><i class="fas fa-book"></i></div>
+            <div>
+              <div class="info-title">Major</div>
+              <div class="info-value"><%= user.major %></div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex align-items-start">
+            <div class="info-icon me-3"><i class="fas fa-chart-line"></i></div>
+            <div>
+              <div class="info-title">GPA</div>
+              <div class="info-value"><%= user.gpa %> </div>
+            </div>
+          </div>
+        </div>
+
+        
+        
+        
+      </div>
+    </div>
+
+    <footer class="mt-5">
+      &copy; 2025 University Student Portal.<span style="color: var(--accent-color);">♥</span>
+    </footer>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+  <script>
+    // Toggle mobile menu
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+    
+    // Toggle dropdown menu
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown-menu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('dropdown-menu');
+      const profileIcon = document.querySelector('.navbar-right .custom-link');
+      
+      if (!profileIcon.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+    
+    // Simple animation for skill bars when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+      const skillBars = document.querySelectorAll('.skill-progress');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const width = entry.target.style.width;
+            entry.target.style.width = '0';
+            setTimeout(() => {
+              entry.target.style.width = width;
+            }, 100);
+          }
+        });
+      }, {threshold: 0.5});
+      
+      skillBars.forEach(bar => {
+        observer.observe(bar);
+      });
+      
+      
+    });
+  </script>
+</body>
+</html>

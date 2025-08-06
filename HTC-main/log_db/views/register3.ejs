@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP Verification</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a4e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-image: url('/css/BSUP.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .all {
+      width: 70%;
+      max-width: 450px;
+      padding: 50px;
+      background: rgba(47, 47, 95, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5);
+      text-align: center;
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 50px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .input1,
+    .input2 {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input1 input,
+    .input2 input {
+      width: 100%;
+      padding: 20px 40px 20px 15px;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      background: rgba(245, 245, 245, 0.85);
+      color: #333;
+      font-size: 18px;
+      transition: 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .input1 input:focus,
+    .input2 input:focus {
+      border: 2px solid #dddddd;
+      box-shadow: 0 0 10px rgba(173, 173, 173, 0.6);
+    }
+
+    .input1 i,
+    .input2 i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 24px;
+    }
+
+    .sub {
+      width: 100%;
+      padding: 18px;
+      border: 2px solid #000000;
+      border-radius: 25px;
+      background-color: #ffffff;
+      color: #333;
+      font-size: 18px;
+      font-weight: bolder;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 30px;
+    }
+
+    .sub:hover {
+      background-color: #9a9a9a;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="all">
+    <h1><b>OTP Verification</b></h1>
+
+    <!-- Email Form (Step 1) -->
+    <div id="emailSection">
+      <div class="input1">
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        <i class='bx bx-envelope'></i>
+      </div>
+      <button id="sendOtpButton" class="sub">Send OTP</button>
+    </div>
+
+    <!-- OTP Input (Step 2) -->
+    <div id="otpSection" style="display: none;">
+      <div class="input2">
+        <input type="text" id="otp" name="otp" placeholder="Enter the OTP you received" required />
+        <i class='bx bx-key'></i>
+      </div>
+      <button id="verifyOtpButton" class="sub">Verify OTP</button>
+    </div>
+
+    <!-- Hidden Form for Final Submission to /register3 -->
+    <form id="registerForm" action="/register3" method="POST" style="display: none;">
+      <input type="hidden" name="email" id="hiddenEmail" />
+    </form>
+  </div>
+
+  <script>
+    const sendOtpButton = document.getElementById('sendOtpButton');
+    const verifyOtpButton = document.getElementById('verifyOtpButton');
+    const emailInput = document.getElementById('email');
+    const otpInput = document.getElementById('otp');
+    const otpSection = document.getElementById('otpSection');
+
+    // Send OTP
+    sendOtpButton.addEventListener('click', async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      if (!email) {
+        alert('Please enter your email.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.text();
+        alert(data);
+
+        if (response.ok) {
+          otpSection.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Error sending OTP:', error);
+        alert('Error sending OTP. Please try again.');
+      }
+    });
+
+    // Verify OTP
+    verifyOtpButton.addEventListener('click', async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const otp = otpInput.value.trim();
+
+      if (!otp || !email) {
+        alert('Please enter the OTP and email.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, otp })
+        });
+
+        const data = await response.text();
+        alert("Register Completed Welcome to HTC ");
+
+        if (response.ok) {
+          // ✅ Set email in hidden form and submit to /register3
+          document.getElementById('hiddenEmail').value = email;
+          document.getElementById('registerForm').submit();
+        } else {
+          alert('OTP verification failed. Try again.');
+        }
+      } catch (error) {
+        console.error('Error verifying OTP:', error);
+        alert('Error verifying OTP. Please try again.');
+      }
+    });
+  </script>
+
+</body>
+
+</html>

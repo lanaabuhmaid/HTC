@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTC Task History</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #34495e;
+        }
+
+        .task-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 0;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .task {
+            padding: 18px 0;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task:last-child {
+            border-bottom: none;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 6px;
+        }
+
+        .task-meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            display: flex;
+            gap: 20px;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        .badge-primary {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #10b981;
+        }
+
+        .badge-danger {
+            background-color: #fee2e2;
+            color: #e11d48;
+        }
+
+        .submit-task,
+        .view-rating,
+        .close-rating {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 0.9em;
+        }
+
+        .submit-task:hover,
+        .view-rating:hover,
+        .close-rating:hover {
+            background-color: #2980b9;
+        }
+
+        .view-rating {
+            background-color: #ecf0f1;
+            color: #2980b9;
+            border: 1px solid #3498db;
+        }
+
+        .view-rating:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .not-rated {
+            font-style: italic;
+            color: #bdc3c7;
+        }
+
+        .task-status {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.85em;
+        }
+
+        .rating-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rating-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 600px;
+            max-width: 90%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            text-align: center;
+        }
+
+        .rating-stars {
+            font-size: 2.2em;
+            color: #f1c40f;
+            margin-bottom: 25px;
+        }
+
+        .close-x {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 1.4em;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close-x:hover {
+            color: #000;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 12px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        .success-message {
+            color: #2ecc71;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            <%= user.name %> Task History
+        </h1>
+
+        <!-- Active Tasks -->
+        <div class="task-section">
+            <h2>Pending Submission</h2>
+            <% tasks.filter(t=> t.status === 'active').forEach(task => { %>
+                <div class="task">
+                    <div class="task-info">
+                        <div class="task-title">
+                            <%= task.title %>
+                        </div>
+                        <div class="task-meta">
+                            <span>Created: <%= task.created_at %></span>
+                            <span>Deadline: <%= task.end_at %></span>
+                            <span class="badge badge-primary">Active</span>
+                        </div>
+                    </div>
+                    <button class="submit-task"
+                        onclick="openSubmitModal('<%= task.title %>', '<%= task.description %>', <%= task.id %>)">Submit
+                        Task</button>
+                </div>
+                <% }) %>
+        </div>
+
+        <!-- Submitted Tasks -->
+        <div class="task-section">
+            <h2>Submitted to Company</h2>
+            <% tasks.filter(t=> t.status === 'completed').forEach(task => { %>
+                <div class="task">
+                    <div class="task-info">
+                        <div class="task-title">
+                            <%= task.title %>
+                        </div>
+                        <div class="task-meta">
+                            <span>Created: <%= task.created_at %></span>
+                            <span>Deadline: <%= task.end_at %></span>
+                            <span class="badge badge-success">Completed</span>
+                        </div>
+                    </div>
+                    <% if (!task.rating) { %>
+                        <div class="not-rated">Not rated yet</div>
+                        <% } else { %>
+                            <button class="view-rating" onclick="openRatingModal(<%= task.rating %>)">View
+                                Rating</button>
+                            <% } %>
+                </div>
+                <% }) %>
+        </div>
+
+        <!-- Overdue Tasks -->
+        <div class="task-section">
+            <h2>Overdue Tasks</h2>
+            <% tasks.filter(t=> t.status === 'overdue').forEach(task => { %>
+                <div class="task">
+                    <div class="task-info">
+                        <div class="task-title">
+                            <%= task.title %>
+                        </div>
+                        <div class="task-meta">
+                            <span>Created: <%= task.created_at %></span>
+                            <span>Deadline: <%= task.end_at %></span>
+                            <span class="badge badge-danger">Overdue</span>
+                        </div>
+                    </div>
+                    <div class="task-status">You Can No Longer Turn In Work</div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <!-- Submit Modal -->
+    <div class="rating-popup" id="submitModal">
+        <div class="rating-content">
+            <span class="close-x" onclick="closeModal('submitModal')">&times;</span>
+            <h3 id="submitTitle"></h3>
+            <p id="submitDesc"></p>
+            <form id="submitForm" enctype="multipart/form-data">
+                <input type="file" name="submissionFile" id="submissionFile" accept="*" required />
+                <input type="hidden" name="task_id" id="taskIdField" />
+                <button type="submit" class="close-rating">Submit</button>
+                <div class="success-message" id="successMessage" style="display: none;">Task submitted successfully!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div class="rating-popup" id="ratingModal">
+        <div class="rating-content">
+            <span class="close-x" onclick="closeModal('ratingModal')">&times;</span>
+            <h3>Task Rating</h3>
+            <div class="rating-stars" id="ratingStars"></div>
+            <button class="close-rating" onclick="closeModal('ratingModal')">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openSubmitModal(title, description, id) {
+            document.getElementById('submitTitle').innerText = title;
+            document.getElementById('submitDesc').innerText = description;
+            document.getElementById('taskIdField').value = id;
+            document.getElementById('submitModal').style.display = 'flex';
+        }
+
+        function openRatingModal(rating) {
+            const full = Math.floor(rating);
+            const half = rating % 1 >= 0.5 ? '½' : '';
+            document.getElementById('ratingStars').innerText = '★'.repeat(full) + half;
+            document.getElementById('ratingModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        document.getElementById('submitForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formElement = this;
+            const formData = new FormData(formElement);
+
+            const response = await fetch('/submit-task', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(() => {
+                    closeModal('submitModal');
+                    location.reload();
+                }, 1500);
+            } else {
+                alert('Failed to submit task.');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,496 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management System | Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --primary-light: #EEF2FF;
+      --secondary: #10B981;
+      --secondary-hover: #059669;
+      --danger: #EF4444;
+      --danger-hover: #DC2626;
+      --warning: #F59E0B;
+      --warning-hover: #D97706;
+      --dark: #1F2937;
+      --dark-gray: #6B7280;
+      --medium-gray: #9CA3AF;
+      --light-gray: #E5E7EB;
+      --extra-light-gray: #F3F4F6;
+      --white: #FFFFFF;
+
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+
+      /* Border radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+      /* Transitions */
+      --transition-fast: 150ms ease-in-out;
+      --transition-normal: 250ms ease-in-out;
+      --transition-slow: 350ms ease-in-out;
+    }
+
+    /* Modal Background */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      /* Darker background for better visibility */
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    /* Modal Box */
+    .modal-box {
+      background-color: var(--white);
+      border-radius: var(--radius-lg);
+      width: 80%;
+      /* Increased width */
+      max-width: 800px;
+      /* Added max-width for larger screens */
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      /* To position the close button */
+    }
+
+    /* Modal Header */
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--light-gray);
+      /* Added a bottom border for separation */
+      padding-bottom: var(--space-md);
+    }
+
+    /* Close Button */
+    .modal-close {
+      font-size: 2rem;
+      /* Make it larger */
+      font-weight: bold;
+      color: var(--danger);
+      /* Red color for visibility */
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    /* Close Button Hover Effect */
+    .modal-close:hover {
+      transform: scale(1.1);
+      /* Slight zoom effect on hover */
+    }
+
+    /* Modal Body */
+    .modal-body {
+      margin-top: var(--space-md);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--dark);
+      /* Dark text for better readability */
+      max-height: 400px;
+      /* Set a maximum height for scrolling */
+      overflow-y: auto;
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    /* Modal Buttons */
+    .btn {
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    /* Adjust Button Styles */
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background-color: var(--light-gray);
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--medium-gray);
+    }
+
+    /* Star Rating */
+    .rating {
+      font-size: 2rem;
+      /* Larger stars */
+      cursor: pointer;
+      margin-top: var(--space-md);
+    }
+
+    .star {
+      color: #ddd;
+      margin-right: 0.2rem;
+    }
+
+    .star.selected {
+      color: gold;
+    }
+
+    /* Base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      color: var(--dark);
+      background-color: var(--extra-light-gray);
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .card-body {
+      padding: var(--space-lg);
+    }
+
+    /* Tables */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: var(--space-md);
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .table th {
+      font-weight: 600;
+      color: var(--dark-gray);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      border-radius: var(--radius-full);
+    }
+
+    .badge-success {
+      background-color: #ECFDF5;
+      color: var(--secondary);
+    }
+
+    .badge-danger {
+      background-color: #FEF2F2;
+      color: var(--danger);
+    }
+
+    .badge-primary {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .btn {
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--light-gray);
+      color: var(--dark);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Task List -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="flex items-center gap-2">
+        <i class="fas fa-list-check text-primary"></i>
+        Recent Tasks <%= user.name %>
+      </h2>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Students</th>
+              <th>Deadline</th>
+              <th>Status</th>
+              <th>Task Submission</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tasks.forEach((task)=> { %>
+              <tr>
+                <!-- Title -->
+                <td>
+                  <%= task.title %>
+                </td>
+
+                <!-- Student Name -->
+                <td>
+                  <%= task.student_username %>
+                </td>
+
+                <!-- Deadline -->
+                <td>
+                  <%= new Date(task.end_at).toLocaleDateString() %>
+                </td>
+
+                <!-- Status -->
+                <td>
+                  <% if (task.status==='completed' ) { %>
+                    <span class="badge badge-success">Completed</span>
+                    <% } else if (task.status==='overdue' ) { %>
+                      <span class="badge badge-danger">Overdue</span>
+                      <% } else if (task.status==='active' ) { %>
+                        <span class="badge badge-primary">Active</span>
+                        <% } %>
+                </td>
+
+                <!-- Show Task Button -->
+                <td>
+                  <% if (task.status==='completed' ) { %>
+                    <button class="btn btn-secondary btn-sm" data-task-id="<%= task.id %>"
+                      data-task-title="<%= task.title %>" data-task-student="<%= task.student_username %>"
+                      data-task-submission-date="<%= new Date(task.submission.created_at).toLocaleDateString() %>"
+                      data-task-submission-desc="<%= task.submission.description %>" onclick="showTaskModal(this)">
+                      <i class="fas fa-eye"></i> Show Task
+                    </button>
+                    <% } %>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Modal for Task Submission (Hidden by default) -->
+  <div class="overlay" id="taskModalOverlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h5 id="taskModalTitle">Task Submission Details</h5>
+        <span class="modal-close" onclick="closeTaskModal()">×</span> <!-- Close button -->
+      </div>
+      <div class="modal-body">
+        <p><strong>Student: </strong><span id="modalStudentName"></span></p>
+        <p><strong>Submission Date: </strong><span id="modalSubmissionDate"></span></p>
+        <p><strong>Description: </strong>
+          <a id="downloadBtn" href="#" download>
+            <button class="btn btn-outline-primary btn-sm">
+              <i class="fas fa-download"></i> Download Submission
+            </button>
+          </a>
+        </p>
+        <p><strong>Rating: </strong>
+        <div class="rating" id="taskRating" style="display: none;">
+          <span class="star" data-rating="1">&#9733;</span>
+          <span class="star" data-rating="2">&#9733;</span>
+          <span class="star" data-rating="3">&#9733;</span>
+          <span class="star" data-rating="4">&#9733;</span>
+          <span class="star" data-rating="5">&#9733;</span>
+        </div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="rateTaskBtn" onclick="toggleRatingSection()">Rate This Task</button>
+        <button class="btn btn-primary" onclick="rateTask()">Submit Rating</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedRating = 0;
+
+    // Toggle the rating section visibility
+    function toggleRatingSection() {
+      const ratingSection = document.getElementById('taskRating');
+      const rateButton = document.getElementById('rateTaskBtn');
+
+      if (ratingSection.style.display === 'none') {
+        ratingSection.style.display = 'block';
+        rateButton.textContent = 'Submit Rating';
+      } else {
+        ratingSection.style.display = 'none';
+        rateButton.textContent = 'Rate This Task';
+      }
+    }
+
+    // Handle star clicks to select rating
+    document.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', function () {
+        selectedRating = parseInt(this.getAttribute('data-rating'));
+        updateStarDisplay();
+      });
+    });
+
+    // Update star display based on selected rating
+    function updateStarDisplay() {
+      const stars = document.querySelectorAll('.star');
+      stars.forEach(star => {
+        if (parseInt(star.getAttribute('data-rating')) <= selectedRating) {
+          star.classList.add('selected');
+        } else {
+          star.classList.remove('selected');
+        }
+      });
+    }
+
+    // Show task details in the modal
+    function showTaskModal(button) {
+      var taskTitle = button.getAttribute('data-task-title');
+      var studentName = button.getAttribute('data-task-student');
+      var submissionDate = button.getAttribute('data-task-submission-date');
+      var submissionDesc = button.getAttribute('data-task-submission-desc');
+      var taskId = button.getAttribute('data-task-id');
+
+      // Set modal content
+      document.getElementById('taskModalTitle').textContent = 'Task Submission for ' + taskTitle;
+      document.getElementById('modalStudentName').textContent = studentName;
+      document.getElementById('modalSubmissionDate').textContent = submissionDate;
+
+      // Set the download link for submissionDesc
+      document.getElementById('downloadBtn').href = './uploads/' + submissionDesc;
+
+      // Set task ID for later use
+      document.getElementById('taskModalOverlay').setAttribute('data-task-id', taskId);
+
+      // Show the modal
+      document.getElementById('taskModalOverlay').style.display = 'flex';
+    }
+
+    // Close the modal
+    function closeTaskModal() {
+      document.getElementById('taskModalOverlay').style.display = 'none';
+      // Reset rating UI and selectedRating
+      selectedRating = 0;
+      updateStarDisplay();
+      document.getElementById('taskRating').style.display = 'none';
+      document.getElementById('rateTaskBtn').textContent = 'Rate This Task';
+    }
+
+    function rateTask() {
+      if (selectedRating === 0) {
+        alert("Please select a rating before submitting.");
+        return;
+      }
+
+      const taskId = document.getElementById('taskModalOverlay').getAttribute('data-task-id');
+
+      // Send the rating to the server
+      fetch("/task_status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          task_id: taskId,
+          rating: selectedRating,
+        }),
+      })
+        .then(response => {
+          console.log("Response Status:", response.status);
+
+          if (response.ok) {
+            return response.json();
+          } else {
+            return response.json().then(errorData => {
+              throw new Error(errorData.message || "An unknown error occurred.");
+            });
+          }
+        })
+        .then(data => {
+          console.log("Success Data:", data);
+          alert("Task rated successfully!");
+          closeTaskModal();
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Task rated successfully!");
+        });
+    }
+  </script>
+</body>
+
+</html>
